@@ -87,3 +87,43 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 ## Documentacion
 ![Documentacion](src/documentacion/documentacion.png)
 
+## Para obtener todos los usuarios
+```javascript
+pm.test("el codigo deberia ser 200", function () {
+     pm.expect(pm.response.code).to.equal(200);
+});
+
+pm.test("el tiempo de requests debe ser menor a 500 ms", function () {
+    pm.expect(pm.response.responseTime).to.be.below(500);
+});
+
+pm.test("la respuesta deberia tener los campos de id, name,email",function(){
+    const jsonData = pm.response.json();
+    jsonData.forEach(item => {
+        pm.expect(item).to.have.property("id");
+        pm.expect(item).to.have.property("name");
+        pm.expect(item).to.have.property("email");
+    })
+}); 
+
+pm.test("el campo 'id' debe ser un numero", function () {
+    const jsonData = pm.response.json();
+    jsonData.forEach(item =>{
+        pm.expect(item.id).to.be.a("number");
+    })
+
+});
+
+pm.test("el campo 'nombre','email' debe ser cadena", function () {
+    const jsonData = pm.response.json();
+    jsonData.forEach(item =>{
+        pm.expect(item.name).to.be.a("string");
+        pm.expect(item.email).to.be.a("string");
+    })
+
+});
+
+pm.test("la respuesta debe ser en formato json",function () {
+    pm.response.to.be.json;
+})
+
