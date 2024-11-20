@@ -127,3 +127,38 @@ pm.test("la respuesta debe ser en formato json",function () {
     pm.response.to.be.json;
 })
 
+## Para obtener un usuario por ID
+```javascript
+pm.test("el codigo del requests debe ser 200", function () {
+    pm.expect(pm.response.code).to.equal(200);
+})
+
+pm.test("el formato de respuesta debe ser en formato json", function () {
+    pm.response.to.be.json;
+});
+
+pm.test("el response debe ser menor a 500 ms", function () {
+    pm.expect(pm.response.responseTime).to.be.below(500);
+});
+
+pm.test("la respuesta deberia tener los campos de id,name,email", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property("id");
+    pm.expect(jsonData).to.have.property("name");
+    pm.expect(jsonData).to.have.property("email");
+});
+
+pm.test("el campo 'id' deberia ser un numero", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property("id").that.is.a("number")
+
+});
+pm.test("el campo 'name', 'email ' deberia ser cadena", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property("name").that.is.a("string")
+    pm.expect(jsonData).to.have.property("email").that.is.a("string")
+});
+pm.test("el formato debe de ser un objeto ",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.be.an("object");
+});
