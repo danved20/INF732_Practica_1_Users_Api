@@ -87,6 +87,8 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 ## Documentacion
 ![Documentacion](src/documentacion/documentacion.png)
 
+## METODO GET
+
 ## Para obtener todos los usuarios
 ```javascript
 pm.test("el codigo deberia ser 200", function () {
@@ -186,4 +188,259 @@ pm.test("el mensaje debe ser User not found", function () {
     var jsonData = pm.response.json();
     pm.expect(jsonData.message).to.equal("User Not Found");
 });
+```
+
+## METODO POST
+## Para crear un usuario 
+```javascript
+pm.test("el codigo de la respuesta debe ser 201", function(){
+    pm.expect(pm.response.code).to.equal(201)
+}) 
+pm.test("la respuesta debe ser menro a 500 ms", function () {
+    pm.expect(pm.response.responseTime).to.be.below(500);
+});
+
+pm.test("el formato de respuesta debe ser en formato JSON", function () {
+    pm.response.to.be.json;
+});
+
+pm.test("la respuesta deberia tener los campos de id,name,email", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property("id");
+    pm.expect(jsonData).to.have.property("name");
+    pm.expect(jsonData).to.have.property("email");
+});
+
+pm.test("el campo 'id' deberia ser un numero", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property("id").that.is.a("number")
+
+});
+pm.test("el campo 'name', 'email ' deberia ser cadena", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property("name").that.is.a("string")
+    pm.expect(jsonData).to.have.property("email").that.is.a("string")
+});
+pm.test("el formato debe de ser un objeto ",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.be.an("object");
+});
+
+```
+## Para verificar si el email ya existe
+```javascript
+pm.test("la respuesta de codigo debe ser 400", function () {
+    pm.expect(pm.response.code).to.equal(400);
+});
+
+pm.test("el timepo de respuesta deber ser menor a 500 ms", function () {
+    pm.expect(pm.response.responseTime).to.be.below(500)
+});
+
+pm.test("el formato de respuesta debe ser json", function () {
+     pm.response.to.be.json;
+});
+
+pm.test("el mensaje de respuesta debe ser Email already exists",function() {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property('message','Email already exists');
+})
+
+pm.test("verifica que los tipos de datos en el error sean correctos", function() {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData.message).to.be.a('string');
+    pm.expect(jsonData.error).to.be.a("string");
+    pm.expect(jsonData.statusCode).to.be.a("number");
+});
+pm.test("el formato debe de ser un objeto ",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.be.an("object");
+});
+
+```
+## Para que todos los campos sean requeridos
+```javascript
+pm.test("la respuesta de codigo debe ser 400", function () {
+    pm.expect(pm.response.code).to.equal(400);
+});
+
+pm.test("el timepo de respuesta deber ser menor a 500 ms", function () {
+    pm.expect(pm.response.responseTime).to.be.below(500)
+});
+
+pm.test("el formato de respuesta debe ser json", function () {
+     pm.response.to.be.json;
+});
+
+pm.test("manda el mensje de que los todos los campos son requeridos",function() {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData.message).to.include("the password is required");
+    pm.expect(jsonData.message).to.include("password must be a string");
+})
+
+pm.test("el formato debe de ser un objeto ",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.be.an("object");
+});
+```
+## PARA EL METODO PUT
+## Para modificar un usuario
+```javascript
+pm.test("el codigo debe ser 200",function(){
+    pm.expect(pm.response.code).to.equal(200)
+});
+
+pm.test("la respuesta es menor a 500 ms", function(){
+    pm.expect(pm.response.responseTime).to.be.below(500)
+});
+
+pm.test("el formato debe ser json",function(){
+    pm.response.to.be.json;
+});
+
+pm.test("la respuesta debe mandar los campos de 'id','name','email'",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property("id");
+    pm.expect(jsonData).to.have.property("name");
+    pm.expect(jsonData).to.have.property("email");
+});
+
+pm.test("el tipo de datos de 'id' debe ser number",function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property("id").that.is.a("number");
+});
+
+
+pm.test("el tipo de dato de 'name','email' debe ser string",function() {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property("name").that.is.a("string");
+    pm.expect(jsonData).to.have.property("email").that.is.a("string");
+});
+
+pm.test("el formato debe de ser un objeto ",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.be.an("object");
+});
+```
+## Para modificar un usuario que no existe
+```javascript
+pm.test("el codigo debe ser 200",function(){
+    pm.expect(pm.response.code).to.equal(404)
+});
+
+pm.test("la respuesta es menor a 500 ms", function(){
+    pm.expect(pm.response.responseTime).to.be.below(500)
+});
+
+pm.test("el formato debe ser json",function(){
+    pm.response.to.be.json;
+});
+
+pm.test("el formato debe de ser un objeto ",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.be.an("object");
+});
+
+pm.test("el mensaje debe ser User not found", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData.message).to.equal("User not found");
+});
+
+```
+## Para modificar un email ya existente
+```javascript
+pm.test("el codigo debe ser 200",function(){
+    pm.expect(pm.response.code).to.equal(400)
+});
+
+pm.test("la respuesta es menor a 500 ms", function(){
+    pm.expect(pm.response.responseTime).to.be.below(500)
+});
+
+pm.test("el formato debe ser json",function(){
+    pm.response.to.be.json;
+});
+
+pm.test("el formato debe de ser un objeto ",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.be.an("object");
+});
+
+pm.test("el mensaje debe ser User not found", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData.message).to.equal("Email already exists");
+});
+
+```
+## PARA EL METODO DELETE
+
+## Para borrar un usuario
+```javascript
+pm.test("el codigo debe ser 200",function(){
+    pm.expect(pm.response.code).to.equal(200)
+});
+
+pm.test("la respuesta es menor a 500 ms", function(){
+    pm.expect(pm.response.responseTime).to.be.below(200)
+});
+
+pm.test("el formato debe ser json",function(){
+    pm.response.to.be.json;
+});
+
+pm.test("el formato debe de ser un objeto ",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.be.an("object");
+});
+
+pm.test("el mensaje que debe mandaar es User deleted successfully",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData.message).to.equal("User deleted successfully");
+})
+
+pm.test("la respuesta debe tener un campo de mensaje",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property("message");
+});
+
+pm.test("el tipo de mensaje debe ser cadena",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property("message").that.is.a("string");
+});
+
+```
+## Para borrar un usuario que no existe
+```javascript
+  pm.test("el codigo debe ser 200",function(){
+    pm.expect(pm.response.code).to.equal(404)
+});
+
+pm.test("la respuesta es menor a 500 ms", function(){
+    pm.expect(pm.response.responseTime).to.be.below(200)
+});
+
+pm.test("el formato debe ser json",function(){
+    pm.response.to.be.json;
+});
+
+pm.test("el formato debe de ser un objeto ",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.be.an("object");
+});
+
+pm.test("el mensaje que debe mandaar es User deleted successfully",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData.message).to.equal("User not found");
+})
+
+pm.test("la respuesta debe tener un campo de mensaje",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property("message");
+});
+
+pm.test("el tipo de mensaje debe ser cadena",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property("message").that.is.a("string");
+});
+
 ```
