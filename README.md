@@ -126,8 +126,9 @@ pm.test("el campo 'nombre','email' debe ser cadena", function () {
 pm.test("la respuesta debe ser en formato json",function () {
     pm.response.to.be.json;
 })
-
+```
 ## Para obtener un usuario por ID
+```javascript
 
 pm.test("el codigo del requests debe ser 200", function () {
     pm.expect(pm.response.code).to.equal(200);
@@ -162,3 +163,27 @@ pm.test("el formato debe de ser un objeto ",function(){
     const jsonData = pm.response.json();
     pm.expect(jsonData).to.be.an("object");
 });
+```
+## Para ver si el usuario no existe
+```javascript
+pm.test("el formato debe ser json",function(){
+    pm.response.to.be.json;
+});
+
+pm.test("la respuesta es menor a 500 ms", function(){
+    pm.expect(pm.response.responseTime).to.be.below(500)
+});
+
+pm.test("el formato debe de ser un objeto ",function(){
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.be.an("object");
+});
+pm.test("el codigo debe ser 200",function(){
+    pm.expect(pm.response.code).to.equal(404)
+});
+
+pm.test("el mensaje debe ser User not found", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData.message).to.equal("User Not Found");
+});
+```
